@@ -639,7 +639,7 @@ IFSRenderer.prototype = {
     // always fits completely inside the canvas.  previously we used the
     // larger side which would zoom the bounding circle past the edges when
     // the viewport was rectangular.
-    this.scale = Math.min(this.height, this.width) * 0.75;
+    this.scale = Math.min(this.height, this.width) * 0.95;
 
     this.renderFractal();
     this.renderUi();
