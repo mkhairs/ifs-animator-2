@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Fractal Generator</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="js/lightgl.min.js"></script>
+    <script src="js/jquery.mousewheel.js"></script>
+    <script src="js/jquery.simplespinner.js"></script>
+    <script src="js/ifs.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  <body>
+    <div id="toolbar">
+      <h1>IFS Fractal Generator</h1>
+      <div id="file-options">
+        <button id="new-fractal" class="primary">New</button>
+        <button id="save-fractal">Save</button>
+        <button id="export-fractal">Export Image</button>
+      </div>
+      <div id="animation-options">
+        <div id="animation-speed">Animation speed:
+          <div class="simple-spinner" data-value="100" data-min-value="-500" data-max-value="500" data-step-size="1"></div>
+        </div>
+        <button id="animation-button" class="primary">Animate!</button>
+      </div>
+    </div>
+
+    <div id="main-layout">
+      <div id="fractal-container">
+        <div id="the-fractal">
+        </div>
+        <canvas id="fractal-ui">
+        </canvas>
+      </div>
+
+      <aside id="sidebar">
+        <div class="sidebar-item" id="presets-panel">
+          <header>Presets</header>
+          <div class="sidebar-item-content">
+            <label for="preset-select">Fractal type</label>
+            <select id="preset-select">
+              <option value="">Select a preset…</option>
+              <option value="sierpinski-triangle">Sierpinski triangle</option>
+              <option value="sierpinski-carpet">Sierpinski carpet</option>
+              <option value="koch-snowflake">Koch snowflake</option>
+              <option value="dragon-curve">Dragon curve</option>
+              <option value="pythagoras-tree">Pythagoras tree</option>
+              <option value="fern-leaf">Fern leaf</option>
+              <option value="lorenz-style">Lorenz attractor style</option>
+              <option value="menger-style">Menger sponge style</option>
+              <option value="l-system-style">L-system style</option>
+              <option value="weierstrass-style">Weierstrass style</option>
+            </select>
+            <button id="apply-preset" type="button" class="primary">Apply preset</button>
+          </div>
+        </div>
+
+        <div class="sidebar-item">
+          <div class="sidebar-item-content">
+            <div>
+              Brightness: <div id="brightness" class="simple-spinner" data-value="100" data-min-value="70" data-max-value="400" data-step-size="1"></div>
+            </div>
+            <div>
+              <button id="item-add" type="button">Add frame</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="item-editor" class="sidebar-item">
+          <header>Frame properties</header>
+          <div class="sidebar-item-content">
+              <div id="item-coeffs">
+                <div>
+                <label><span>a: </span><input id="coeff-a" type="text"></label>
+                <label><span>b: </span><input id="coeff-b" type="text"></label>
+                <label><span>e: </span><input id="coeff-e" type="text"></label>
+                </div>
+                <div>
+                <label><span>c: </span><input id="coeff-c" type="text"></label>
+                <label><span>d: </span><input id="coeff-d" type="text"></label>
+                <label><span>f: </span><input id="coeff-f" type="text"></label>
+                </div>
+              </div>
+              <div id="item-rotation-speed">
+                Rotation speed:
+                <div class="simple-spinner" data-value="100" data-min-value="-200" data-max-value="200" data-step-size="1"></div>
+              </div>
+              <div id="item-color">
+                <div>
+                  Red:
+                  <div id="spinner-red" class="simple-spinner" data-value="0" data-min-value="0" data-max-value="100" data-step-size="1"></div>
+                </div>
+                <div>
+                  Green:
+                  <div id="spinner-green" class="simple-spinner" data-value="0" data-min-value="0" data-max-value="100" data-step-size="1"></div>
+                </div>
+                <div>
+                  Blue:
+                  <div id="spinner-blue" class="simple-spinner" data-value="0" data-min-value="0" data-max-value="100" data-step-size="1"></div>
+                </div>
+                <div>
+                  <button id="random-color" type="button">Random color</button>
+                </div>
+              </div>
+              <button id="item-delete" type="button">Delete frame</button>
+          </div>
+        </div>
+
+        <div id="extra" class="sidebar-item">
+          <div class="sidebar-item-content">
+            <button id="fit-to-screen" type="button">Fit to screen</button>
+            <button id="hq-fractal">Enable high quality fractals<br>(requires a decent graphics card)</button>
+            <button id="lq-fractal" style="display: none">Disable high quality fractals</button>
+            <button id="disable-flashes">I have epilepsy</button>
+            <button id="enable-flashes" style="display: none">I don't have epilepsy</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div id="export-overlay" style="display: none">
+      <img>
+    </div>
+  </body>
+</html>
