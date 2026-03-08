@@ -848,7 +848,7 @@ IFSRenderer.prototype = {
   fitToScreen: function() {
     var bc = this.ifs.getBoundingCircle(),
         m = this.ifs.globalTransform.matrix.m,
-        scale = 1 / (bc.radius * Math.sqrt(m[0] * m[0] + m[4] * m[4])*1.5);
+        scale = 1 / (bc.radius * Math.sqrt(m[0] * m[0] + m[4] * m[4])*2);
 
     m[0] *= scale;
     m[1] *= scale;
