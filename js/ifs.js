@@ -2,6 +2,8 @@ var __tempMatrix = new GL.Matrix(),
     __tempMatrix2 = new GL.Matrix(),
     __tempObject = {};
 
+
+
 function IFS(gl, textureSize) {
   textureSize = textureSize || 1024;
   this.gl = gl;
@@ -15,7 +17,7 @@ function IFS(gl, textureSize) {
   };
 	this.functions = [];
 
-	this.brightness = 1.0;
+	this.brightness = 1.2;
 
 	IFS.shader = IFS.shader || new GL.Shader([
 		'uniform mat4 function;',
@@ -41,6 +43,7 @@ function IFS(gl, textureSize) {
 	this.reset();
 }
 
+// By default assume flashes are disabled for users with epilepsy
 var epilepsyCheck = true;
 var epilepsySafeTimer = 0;
 
@@ -560,9 +563,11 @@ IFSRenderer.prototype = {
 
   mouseup: function(e) {
     this.mouseDown = -1;
+
   },
 
   mousewheel: function(e, delta) {
+    // zooming is a change (no history support)
     var m = this.ifs.globalTransform.matrix.m;
     var scale = delta > 0 ? (1 + 0.071 * delta) : (1 / (1 - 0.071 * delta));
 
@@ -597,7 +602,6 @@ IFSRenderer.prototype = {
     if (this.selected == this.ifs.globalTransform && this.lockFunctions) {
       this.restoreFunctions();
     }
-
   },
 
   keydown: function(e) {
@@ -623,6 +627,7 @@ IFSRenderer.prototype = {
       this.selected = null;
 
       this.$gl.trigger('change');
+
     }
   },
 
@@ -630,7 +635,11 @@ IFSRenderer.prototype = {
     this.width = this.$gl.width();
     this.height = this.$gl.height();
 
-    this.scale = Math.max(this.height, this.width) * 0.5;
+    // choose half of the _smaller_ dimension so that a unit radius circle
+    // always fits completely inside the canvas.  previously we used the
+    // larger side which would zoom the bounding circle past the edges when
+    // the viewport was rectangular.
+    this.scale = Math.min(this.height, this.width) * 0.75;
 
     this.renderFractal();
     this.renderUi();
@@ -839,7 +848,7 @@ IFSRenderer.prototype = {
   fitToScreen: function() {
     var bc = this.ifs.getBoundingCircle(),
         m = this.ifs.globalTransform.matrix.m,
-        scale = 1 / (bc.radius * Math.sqrt(m[0] * m[0] + m[4] * m[4]));
+        scale = 1 / (bc.radius * Math.sqrt(m[0] * m[0] + m[4] * m[4])*1.5);
 
     m[0] *= scale;
     m[1] *= scale;
